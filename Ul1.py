@@ -9,10 +9,11 @@ class sodalane:
         print(f"{self.nimi} lõõb")
         teine.tervis -= 20
         print(f"{teine.nimi} tervis: {teine.tervis}")
-        
+#Loob kaks sodalase klassi objekti        
 sodalane1 = sodalane("Sõdalane 1")
 sodalane2 = sodalane("Sõdalane 2")
-
+#Vaatab kas sodalasel on rohkem kui 0 tervist
+#Kui on valib suvalise tabaja ja kaitsjaks võtab teise sodalase
 while sodalane1.tervis > 0 and sodalane2.tervis > 0:
     tabaja = random.choice([sodalane1, sodalane2])
     kaitsja = sodalane2 if tabaja == sodalane1 else sodalane1
