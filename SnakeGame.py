@@ -1,16 +1,16 @@
-# Robert Bahtairov IS23 (#* = Ise lisanud/Modifitseerinud)
+# Robert Bahtairov IS23 (#* = Ise lisanud/Modifitseerinud) Ise lisanud- 5 asja
 import random, math, pygame
 from pygame.locals import *
 pygame.init()
 
 counter = 0
-# Hääled ja Muusika *
+# Hääled ja Muusika * Ise kõik lisanud
 
-muusika = pygame.mixer.music.load('failid/Zander Noriega - Perpetual Tension.mp3')
-muusika = pygame.mixer.music.play(-1)
-muusika = pygame.mixer.music.set_volume(0.2)
-eat = pygame.mixer.Sound('failid/eat.wav')
-die = pygame.mixer.Sound('failid/die.wav')
+muusika = pygame.mixer.music.load('failid/Zander Noriega - Perpetual Tension.mp3')#Tausta muusika
+muusika = pygame.mixer.music.play(-1)#Muusika mängib lõppmatusi
+muusika = pygame.mixer.music.set_volume(0.2)#Muusika vaiksemaks tegemine
+eat = pygame.mixer.Sound('failid/eat.wav')#söömis hääl
+die = pygame.mixer.Sound('failid/die.wav')#Surma hääl
 
 
 #PEAMINE 
@@ -22,14 +22,14 @@ def main():
     while 1:
         # KONSTANTID
 
-        WINSIZE = [800,600]
+        WINSIZE = [800,600]#ekraani suurus
         WHITE = [255,255,255]
         BLACK = [0,0,0]
         RED = [255,0,0]
         GREEN = [0,255,0]
-        DGREEN = [2,48,32] #*
+        DGREEN = [2,48,32] #* Tume roheline värv
         BLUE = [0,0,255]
-        BLOCKSIZE = [20,20]
+        BLOCKSIZE = [20,20]#kirsi suurus
         UP = 1
         DOWN = 3
         RIGHT = 2
@@ -44,30 +44,30 @@ def main():
         
         ######## MUUTUJAD
 
-        direction = RIGHT # 1=üles,2=paremale,3=alla,4=vasakule
+        direction = RIGHT # 1=üles,2=paremale,3=alla,4=vasakule; mis suunas vaatades madu algab
         snakexy = [300,400]
         snakelist = [[300,400],[280,400],[260,400]]
         counter = 0
-        score = 0
+        score = 0#skoor
         kirssonscreen = 0 #*
         #kirssxy = [0,0]
         newdirection = RIGHT
-        snakedead = FALSE
+        snakedead = FALSE#kas madu on surnud
         gameregulator = 6
-        gamepaused = 0
+        gamepaused = 0 # kas mäng on pausis
         growsnake = 0  # lisatud, et kasvatada saba iga kord kahe võrra 
         snakegrowunit = 2 # lisatud, et kasvatada saba iga kord kahe võrra
         
         
         pygame.init()
         clock = pygame.time.Clock()
-        screen = pygame.display.set_mode(WINSIZE)
-        pygame.display.set_caption('SNAKE') #*
-        taust = pygame.image.load("failid/hein.png") #*
-        taust = pygame.transform.scale(taust, [800,600])#*
-        screen.blit(taust,[0,0])#*
-        kirssimg = pygame.image.load("failid/kirss.png")#*
-        kirssimg = pygame.transform.scale(kirssimg, BLOCKSIZE)#*
+        screen = pygame.display.set_mode(WINSIZE)#ekraani suurus
+        pygame.display.set_caption('SNAKE') #*Ise lisanud; mis programmi nimi on
+        taust = pygame.image.load("failid/hein.png") #*Ise lisanud; laeb tausta pildi
+        taust = pygame.transform.scale(taust, [800,600])#*Ise lisanud ; muudab tausta pildi suurust
+        screen.blit(taust,[0,0])#*Ise lisanud ; Laeb tausta ekraanile
+        kirssimg = pygame.image.load("failid/kirss.png")#*Ise lisanud; laeb kirsi pildi
+        kirssimg = pygame.transform.scale(kirssimg, BLOCKSIZE)#*Ise lisanud; teeb kirsi suuruse blocky suuruseks
         
 
         # näita algusekraani
@@ -75,13 +75,13 @@ def main():
         if showstartscreen == TRUE:
             showstartscreen = FALSE
 
-            s = [[180,120],[180,100],[160,100],[140,100],[120,100],[100,100],[100,120],[100,140],[100,160],[120,160],[140,160],[160,160],[180,160],[180,180],[180,200],[180,220],[160,220],[140,220],[120,220],[100,220],[100,200]]
+            s = [[180,120],[180,100],[160,100],[140,100],[120,100],[100,100],[100,120],[100,140],[100,160],[120,160],[140,160],[160,160],[180,160],[180,180],[180,200],[180,220],[160,220],[140,220],[120,220],[100,220],[100,200]] #start screenil S tähe tegemine
             
-            kirss = [100,200] #*
+            kirss = [100,200] #* Ise lisanud; kirsi asukoht start screenil
             
             
             
-            screen.blit(kirssimg,kirss)#*
+            screen.blit(kirssimg,kirss)#*Ise lisanud; Laeb start screenil kirsi
             pygame.display.flip()
             clock.tick(8)
             
@@ -91,16 +91,16 @@ def main():
                 clock.tick(8)
                 
             font = pygame.font.SysFont("arial", 64)
-            text_surface = font.render("NAKE", True, GREEN)#*
+            text_surface = font.render("NAKE", True, GREEN)#* ; start screeni Snake tekst teine osa
             screen.blit(text_surface, (220,180))
             font = pygame.font.SysFont("arial", 24)
-            text_surface = font.render("Liiguda madu kasutades arrow keys ja proovi kirsse süüa", True, WHITE)#*
+            text_surface = font.render("Liiguda madu kasutades arrow keys ja proovi kirsse süüa", True, WHITE)#*; start screeni text
             screen.blit(text_surface, (50,300))
-            text_surface = font.render("Hoia seintest eemale!", True, WHITE)#*
+            text_surface = font.render("Hoia seintest eemale!", True, WHITE)#* ; start screeni text
             screen.blit(text_surface, (50,350))
-            text_surface = font.render("Vajuta S tähte mängu alustamiseks   - Vajuta Q mängu lõpetamiseks", True, WHITE)#*
+            text_surface = font.render("Vajuta S tähte mängu alustamiseks   - Vajuta Q mängu lõpetamiseks", True, WHITE)#*; start screeni text
             screen.blit(text_surface, (50,400))
-            text_surface = font.render("Vajuta P pausi jaoks ja R, et edasi mängida millal iganes", True, WHITE)#*
+            text_surface = font.render("Vajuta P pausi jaoks ja R, et edasi mängida millal iganes", True, WHITE)#*; start screeni text
             screen.blit(text_surface, (50,450))
 
             pygame.display.flip()
@@ -110,13 +110,13 @@ def main():
                         exit()
 
                 pressed_keys = pygame.key.get_pressed()
-                if pressed_keys[K_q]: exit()
-                if pressed_keys[K_s]: break
+                if pressed_keys[K_q]: exit() # kui vajutad Q tähte väljub mängust
+                if pressed_keys[K_s]: break # kui vajutad S tähte alustab mängu
 
-                clock.tick(10)
+                clock.tick(10) # mängu kiirus
 
 
-        while not snakedead:
+        while not snakedead: # kui madu ei ole surnud siis teeb edasi
 
             # saa sisendsündmused 
 
@@ -124,23 +124,23 @@ def main():
                 if event.type == QUIT:
                     exit()
                     
-            pressed_keys = pygame.key.get_pressed()
+            pressed_keys = pygame.key.get_pressed() #kui vajutad nuppu siis teeb edasi
             
-            if pressed_keys[K_LEFT]: newdirection = LEFT
-            if pressed_keys[K_RIGHT]: newdirection = RIGHT
-            if pressed_keys[K_UP]: newdirection = UP
-            if pressed_keys[K_DOWN]: newdirection = DOWN
-            if pressed_keys[K_q]: snakedead = TRUE
-            if pressed_keys[K_p]: gamepaused = 1
+            if pressed_keys[K_LEFT]: newdirection = LEFT #muudab direktsiooni vasakule
+            if pressed_keys[K_RIGHT]: newdirection = RIGHT #muudab direktsiooni paremale
+            if pressed_keys[K_UP]: newdirection = UP #muudab direktsiooni üles
+            if pressed_keys[K_DOWN]: newdirection = DOWN#muudab direktsiooni alla
+            if pressed_keys[K_q]: snakedead = TRUE #kui vajutad q siis muudab mao surnuks ja lahkub mängust
+            if pressed_keys[K_p]: gamepaused = 1 # Kui vajutad P pausib mängu
 
-            # oota siin, kui p-klahv on vajutatud, kuni p-klahv on uuesti vajutatud
+            # oota siin, kui p-klahv on vajutatud, kuni r-klahv on vajutatud
             
             while gamepaused == 1:
                 for event in pygame.event.get():
                     if event.type == QUIT:
                         exit()
                 pressed_keys = pygame.key.get_pressed()
-                if pressed_keys[K_r]:
+                if pressed_keys[K_r]: # Unpause mängu
                     gamepaused = 0 
                 clock.tick(10)
 
@@ -165,22 +165,22 @@ def main():
                 # kui tabame seina, siis madu sureb
                                 
 
-                if direction == RIGHT:
+                if direction == RIGHT: #Madu sureb kui läheb vastu paremad seina
                     snakexy[0] = snakexy[0] + SNAKESTEP
                     if snakexy[0] > MAXX:
                         snakedead = TRUE
                     
-                elif direction == LEFT:
+                elif direction == LEFT:#Madu sureb kui läheb vastu vasakut seina
                     snakexy[0] = snakexy[0] - SNAKESTEP
                     if snakexy[0] < MINX:
                         snakedead = TRUE
                         
-                elif direction == UP:
+                elif direction == UP:#Madu sureb kui läheb vastu ülemist seina
                     snakexy[1] = snakexy[1] - SNAKESTEP
                     if snakexy[1] < MINY:
                         snakedead = TRUE
                         
-                elif direction == DOWN:
+                elif direction == DOWN:#Madu sureb kui läheb vastu alumist seina
                     snakexy[1] = snakexy[1] + SNAKESTEP
                     if snakexy[1] > MAXY:
                         snakedead = TRUE
@@ -195,11 +195,11 @@ def main():
                 #### genereeri kirss juhuslikus positsioonis, kui ekraanil pole kirssi
                 #### veendu, et kirss ei ilmuks madu positsioonile
                     
-                if kirssonscreen == 0: #*
+                if kirssonscreen == 0: #* #kui kirssi ei ole siis edasi
                     good = FALSE
                     while good == FALSE:
-                        x = random.randrange(1,39)
-                        y = random.randrange(5,29)
+                        x = random.randrange(1,39) #suvaline x kord
+                        y = random.randrange(5,29) #suvaline y kord
                         kirssxy = [int(x*SNAKESTEP),int(y*SNAKESTEP)]
                         if snakelist.count(kirssxy) == 0:
                             good = TRUE
@@ -212,14 +212,14 @@ def main():
                 snakelist.insert(0,list(snakexy))
                 if snakexy[0] == kirssxy[0] and snakexy[1] == kirssxy[1]:
                     kirssonscreen = 0
-                    score = score + 1
-                    growsnake = growsnake + 1
-                    pygame.mixer.Sound.play(eat)#*
+                    score = score + 1 # lisab skoorile punkti kui kirss on söödud
+                    growsnake = growsnake + 1 # teeb mao suuremaks
+                    pygame.mixer.Sound.play(eat)#*; kui kirsi sööb mängib hääld
                 elif growsnake > 0:
                     growsnake = growsnake + 1
                     if growsnake == snakegrowunit:
                         growsnake = 0
-                        pygame.mixer.Sound.play(eat)#*
+                        pygame.mixer.Sound.play(eat)#* kui kirsi sööb mängib hääld
                 else:
                     snakelist.pop()
                     
@@ -231,7 +231,7 @@ def main():
             #EKRAANI JOONISTAMINE
             
             # Puhasta ekraan
-            screen.blit(taust,[0,0])#*
+            screen.blit(taust,[0,0])#*Ise lisanud
             
             #Joonista ekraani piirid
             #horisontaaljooned
@@ -244,7 +244,7 @@ def main():
             
             # Prindi skoor
             font = pygame.font.SysFont("arial", 38)
-            text_surface = font.render("SNAKE!          Skoor: " + str(score), True, GREEN)#*
+            text_surface = font.render("SNAKE!          Skoor: " + str(score), True, GREEN)#*; mängu sisene tekst
             screen.blit(text_surface, (50,18))
 
             # Väljasta array elemendid ekraanile ruutudena (madu)
@@ -252,8 +252,8 @@ def main():
                 pygame.draw.rect(screen,GREEN,Rect(element,BLOCKSIZE))#*
 
             # Joonista kirss
-            kirss = pygame.draw.rect(screen,WHITE,Rect(kirssxy,[0,0]))  #*              
-            screen.blit(kirssimg,kirss)#*
+            kirss = pygame.draw.rect(screen,WHITE,Rect(kirssxy,[0,0]))  #*Ise lisanud              
+            screen.blit(kirssimg,kirss)#*Ise lisanud
 
             # Värskenda ekraani, et näidata kõike, mida just muutsime
             pygame.display.flip()
@@ -267,18 +267,18 @@ def main():
 
         # kui madu on surnud, siis on mäng läbi
             
-        if snakedead == TRUE:                       
-            pygame.mixer.Sound.play(die)#*            
-            screen.blit(taust,[0,0])#*
+        if snakedead == TRUE: #kui madu on surnud                      
+            pygame.mixer.Sound.play(die)#*; mängi surma hääl            
+            screen.blit(taust,[0,0])#* Laeb tühja tausta
             font = pygame.font.SysFont("arial", 48)
-            text_surface = font.render("GAME OVER", True, RED)#*
+            text_surface = font.render("GAME OVER", True, RED)#* Tekst
             screen.blit(text_surface, (250,200))
-            text_surface = font.render("Sinu Skoor: " + str(score), True, WHITE)#*
+            text_surface = font.render("Sinu Skoor: " + str(score), True, WHITE)#*Tekst
             screen.blit(text_surface, (250,300))
             font = pygame.font.SysFont("arial", 24)
-            text_surface = font.render("Vajuta Q, et lahkuda", True, WHITE)#*
+            text_surface = font.render("Vajuta Q, et lahkuda", True, WHITE)#*Tekst
             screen.blit(text_surface, (300,400))
-            text_surface = font.render("Vajuta N, et uuesti mängida", True, WHITE)#*
+            text_surface = font.render("Vajuta N, et uuesti mängida", True, WHITE)#*Tekst
             screen.blit(text_surface, (275,450))
 
             pygame.display.flip()
