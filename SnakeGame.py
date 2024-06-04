@@ -1,5 +1,5 @@
 # Robert Bahtairov IS23 (#* = Ise lisanud/Modifitseerinud) Ise lisanud- 5 asja
-import random, math, pygame #importib neid
+import random, math, pygame, time #importib neid
 from pygame.locals import * #importib neid
 pygame.init() #init pygamei
 
@@ -21,8 +21,9 @@ def main():
     
     while 1:
         # KONSTANTID
-
-        WINSIZE = [800,600]#ekraani suurus
+        screenX=800
+        screenY=600
+        WINSIZE = [screenX,screenY]#ekraani suurus
         WHITE = [255,255,255]# Värv
         BLACK = [0,0,0]# Värv
         RED = [255,0,0]# Värv
@@ -41,7 +42,7 @@ def main():
         SNAKESTEP = 20 # Madu sammu suurus
         TRUE = 1
         FALSE = 0
-        
+
         ######## MUUTUJAD
 
         direction = RIGHT # 1=üles,2=paremale,3=alla,4=vasakule; mis suunas vaatades madu algab
@@ -57,24 +58,32 @@ def main():
         gamepaused = 0 # kas mäng on pausis
         growsnake = 0  # lisatud, et kasvatada saba iga kord kahe võrra 
         snakegrowunit = 2 # lisatud, et kasvatada saba iga kord kahe võrra
+        speedX, speedY = 0, 0
+        directionX, directionY = 0, 0
+        blockerposX, blockerposY = 20, 200
         
-        
+        blocker = pygame.Rect(blockerposX, blockerposY, 40, 20)
+        blockerSpeedX = 3
         pygame.init()
-        clock = pygame.time.Clock()#Mängu kell
+        clock = pygame.time.Clock()#Mängu kell 
         screen = pygame.display.set_mode(WINSIZE)#ekraani suurus
         pygame.display.set_caption('SNAKE') #*Ise lisanud; mis programmi nimi on
         taust = pygame.image.load("failid/hein.png") #*Ise lisanud; laeb tausta pildi
         taust = pygame.transform.scale(taust, [800,600])#*Ise lisanud ; muudab tausta pildi suurust
         screen.blit(taust,[0,0])#*Ise lisanud ; Laeb tausta ekraanile
+        blockerImage = pygame.image.load("failid/blocker.png")
+        blockerImage = pygame.transform.scale(blockerImage, [40,20])
         kirssimg = pygame.image.load("failid/kirss.png")#*Ise lisanud; laeb kirsi pildi
         kirssimg = pygame.transform.scale(kirssimg, BLOCKSIZE)#*Ise lisanud; teeb kirsi suuruse blocky suuruseks
+        startaeg = time.time()
+        
         
 
         # näita algusekraani
         
         if showstartscreen == TRUE:#Algus ekraan kui tõsi
             showstartscreen = FALSE
-
+                
             s = [[180,120],[180,100],[160,100],[140,100],[120,100],[100,100],[100,120],[100,140],[100,160],[120,160],[140,160],[160,160],[180,160],[180,180],[180,200],[180,220],[160,220],[140,220],[120,220],[100,220],[100,200]] #start screenil S tähe tegemine
             
             kirss = [100,200] #* Ise lisanud; kirsi asukoht start screenil
@@ -117,13 +126,15 @@ def main():
 
 
         while not snakedead: # kui madu ei ole surnud siis teeb edasi
-
+            
             # saa sisendsündmused 
 
             for event in pygame.event.get():
                 if event.type == QUIT:
                     exit()
                     
+            aeg_time = str(time.time() - startaeg)
+            aegsek = str(int(time.time() - startaeg))        
             pressed_keys = pygame.key.get_pressed() #kui vajutad nuppu siis teeb edasi
             
             if pressed_keys[K_LEFT]: newdirection = LEFT #muudab direktsiooni vasakule
@@ -143,11 +154,12 @@ def main():
                 if pressed_keys[K_r]: # Unpause mängu
                     gamepaused = 0 
                 clock.tick(10)
-
+                
             
             if gameregulator == 6:
 
                 # veendume, et me ei saa liikuda vastassuunas
+                
 
                 if newdirection == LEFT and not direction == RIGHT:
                     direction = newdirection
@@ -225,6 +237,7 @@ def main():
                     
                 
 
+ 
                 gameregulator = 0
 
 
@@ -232,6 +245,22 @@ def main():
             
             # Puhasta ekraan
             screen.blit(taust,[0,0])#*Ise lisanud
+            
+                            #Blcoker
+            blocker = pygame.Rect(blockerposX, blockerposY, 20, 20)
+            screen.blit(blockerImage,blocker)
+                
+                #liikumine
+            blockerposX += blockerSpeedX
+                
+
+            if blockerposX > screenX-blockerImage.get_rect().width or blockerposX < 0:
+                blockerSpeedX = -blockerSpeedX
+            
+            #kokkupõrke 
+            
+              
+        
             
             #Joonista ekraani piirid
             #horisontaaljooned
@@ -254,7 +283,12 @@ def main():
             # Joonista kirss
             kirss = pygame.draw.rect(screen,WHITE,Rect(kirssxy,[0,0]))  #*Ise lisanud              
             screen.blit(kirssimg,kirss)#*Ise lisanud
-
+            
+            font = pygame.font.SysFont("arial", 30)# Text Font ja suurus
+            text_surface = font.render("Aeg: " + str(aegsek), True, GREEN)#*; mängu sisene tekst
+            screen.blit(text_surface, (600,21))# Text asukoht
+            
+ 
             # Värskenda ekraani, et näidata kõike, mida just muutsime
             pygame.display.flip()
 
@@ -280,7 +314,10 @@ def main():
             screen.blit(text_surface, (300,400))# text kord
             text_surface = font.render("Vajuta N, et uuesti mängida", True, WHITE)#*Tekst
             screen.blit(text_surface, (275,450))# text kord
-
+            font = pygame.font.SysFont("arial", 35)# Text Font ja suurus
+            text_surface = font.render("Aeg: " + str(aegsek), True, WHITE)#*; mängu sisene tekst
+            screen.blit(text_surface, (320,355))# Text asukoht
+            
             pygame.display.flip()
             while 1:
                 for event in pygame.event.get():
