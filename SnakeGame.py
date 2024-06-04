@@ -1,7 +1,7 @@
 # Robert Bahtairov IS23 (#* = Ise lisanud/Modifitseerinud) Ise lisanud- 5 asja
-import random, math, pygame
-from pygame.locals import *
-pygame.init()
+import random, math, pygame #importib neid
+from pygame.locals import * #importib neid
+pygame.init() #init pygamei
 
 counter = 0
 # Hääled ja Muusika * Ise kõik lisanud
@@ -17,35 +17,35 @@ die = pygame.mixer.Sound('failid/die.wav')#Surma hääl
 
 def main():
 
-    showstartscreen = 1
+    showstartscreen = 1 #start screen tõene
     
     while 1:
         # KONSTANTID
 
         WINSIZE = [800,600]#ekraani suurus
-        WHITE = [255,255,255]
-        BLACK = [0,0,0]
-        RED = [255,0,0]
-        GREEN = [0,255,0]
+        WHITE = [255,255,255]# Värv
+        BLACK = [0,0,0]# Värv
+        RED = [255,0,0]# Värv
+        GREEN = [0,255,0]# Värv
         DGREEN = [2,48,32] #* Tume roheline värv
-        BLUE = [0,0,255]
+        BLUE = [0,0,255]# Värv
         BLOCKSIZE = [20,20]#kirsi suurus
         UP = 1
         DOWN = 3
         RIGHT = 2
         LEFT = 4
-        MAXX = 760
-        MINX = 20
-        MAXY = 560
-        MINY = 80
-        SNAKESTEP = 20
+        MAXX = 760 #Max x Kordi kus madu saab liiguda
+        MINX = 20 # Min x Kordi kus madu saab liiguda
+        MAXY = 560 #Max Y Kordi kus madu saab liiguda
+        MINY = 80 #Min Y Kordi kus madu saab liiguda
+        SNAKESTEP = 20 # Madu sammu suurus
         TRUE = 1
         FALSE = 0
         
         ######## MUUTUJAD
 
         direction = RIGHT # 1=üles,2=paremale,3=alla,4=vasakule; mis suunas vaatades madu algab
-        snakexy = [300,400]
+        snakexy = [300,400]# madu algus kordi
         snakelist = [[300,400],[280,400],[260,400]]
         counter = 0
         score = 0#skoor
@@ -60,7 +60,7 @@ def main():
         
         
         pygame.init()
-        clock = pygame.time.Clock()
+        clock = pygame.time.Clock()#Mängu kell
         screen = pygame.display.set_mode(WINSIZE)#ekraani suurus
         pygame.display.set_caption('SNAKE') #*Ise lisanud; mis programmi nimi on
         taust = pygame.image.load("failid/hein.png") #*Ise lisanud; laeb tausta pildi
@@ -72,7 +72,7 @@ def main():
 
         # näita algusekraani
         
-        if showstartscreen == TRUE:
+        if showstartscreen == TRUE:#Algus ekraan kui tõsi
             showstartscreen = FALSE
 
             s = [[180,120],[180,100],[160,100],[140,100],[120,100],[100,100],[100,120],[100,140],[100,160],[120,160],[140,160],[160,160],[180,160],[180,180],[180,200],[180,220],[160,220],[140,220],[120,220],[100,220],[100,200]] #start screenil S tähe tegemine
@@ -90,21 +90,21 @@ def main():
                 pygame.display.flip()
                 clock.tick(8)
                 
-            font = pygame.font.SysFont("arial", 64)
+            font = pygame.font.SysFont("arial", 64)# Text Font ja suurus
             text_surface = font.render("NAKE", True, GREEN)#* ; start screeni Snake tekst teine osa
-            screen.blit(text_surface, (220,180))
-            font = pygame.font.SysFont("arial", 24)
+            screen.blit(text_surface, (220,180))# Kus text on
+            font = pygame.font.SysFont("arial", 24)# Text Font ja suurus
             text_surface = font.render("Liiguda madu kasutades arrow keys ja proovi kirsse süüa", True, WHITE)#*; start screeni text
-            screen.blit(text_surface, (50,300))
+            screen.blit(text_surface, (50,300))# Kus text on
             text_surface = font.render("Hoia seintest eemale!", True, WHITE)#* ; start screeni text
-            screen.blit(text_surface, (50,350))
+            screen.blit(text_surface, (50,350))# Kus text on
             text_surface = font.render("Vajuta S tähte mängu alustamiseks   - Vajuta Q mängu lõpetamiseks", True, WHITE)#*; start screeni text
-            screen.blit(text_surface, (50,400))
+            screen.blit(text_surface, (50,400))# Kus text on
             text_surface = font.render("Vajuta P pausi jaoks ja R, et edasi mängida millal iganes", True, WHITE)#*; start screeni text
-            screen.blit(text_surface, (50,450))
+            screen.blit(text_surface, (50,450))# Kus text on
 
             pygame.display.flip()
-            while 1:
+            while 1:#kui näitab start screeni
                 for event in pygame.event.get():
                     if event.type == QUIT:
                         exit()
@@ -203,7 +203,7 @@ def main():
                         kirssxy = [int(x*SNAKESTEP),int(y*SNAKESTEP)]
                         if snakelist.count(kirssxy) == 0:
                             good = TRUE
-                    kirssonscreen = 1
+                    kirssonscreen = 1 #kui kirss on
 
                 #### lisa uue madu pea positsioon
                 #### kui me oleme söönud kirsi, siis ei eemalda saba (kasvata madu)
@@ -243,9 +243,9 @@ def main():
             pygame.draw.line(screen,DGREEN,(789,0),(789,599),20)#*
             
             # Prindi skoor
-            font = pygame.font.SysFont("arial", 38)
+            font = pygame.font.SysFont("arial", 38)# Text Font ja suurus
             text_surface = font.render("SNAKE!          Skoor: " + str(score), True, GREEN)#*; mängu sisene tekst
-            screen.blit(text_surface, (50,18))
+            screen.blit(text_surface, (50,18))# Text asukoht
 
             # Väljasta array elemendid ekraanile ruutudena (madu)
             for element in snakelist:
@@ -270,16 +270,16 @@ def main():
         if snakedead == TRUE: #kui madu on surnud                      
             pygame.mixer.Sound.play(die)#*; mängi surma hääl            
             screen.blit(taust,[0,0])#* Laeb tühja tausta
-            font = pygame.font.SysFont("arial", 48)
+            font = pygame.font.SysFont("arial", 48)# Text Font ja suurus
             text_surface = font.render("GAME OVER", True, RED)#* Tekst
-            screen.blit(text_surface, (250,200))
+            screen.blit(text_surface, (250,200))# text kord
             text_surface = font.render("Sinu Skoor: " + str(score), True, WHITE)#*Tekst
-            screen.blit(text_surface, (250,300))
-            font = pygame.font.SysFont("arial", 24)
+            screen.blit(text_surface, (250,300))# text kord
+            font = pygame.font.SysFont("arial", 24)# Text Font ja suurus
             text_surface = font.render("Vajuta Q, et lahkuda", True, WHITE)#*Tekst
-            screen.blit(text_surface, (300,400))
+            screen.blit(text_surface, (300,400))# text kord
             text_surface = font.render("Vajuta N, et uuesti mängida", True, WHITE)#*Tekst
-            screen.blit(text_surface, (275,450))
+            screen.blit(text_surface, (275,450))# text kord
 
             pygame.display.flip()
             while 1:
