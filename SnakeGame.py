@@ -31,6 +31,7 @@ def main():
         DGREEN = [2,48,32] #* Tume roheline värv
         BLUE = [0,0,255]# Värv
         BLOCKSIZE = [20,20]#kirsi suurus
+        blockerSize = [20, 20]#blocker suurus
         UP = 1
         DOWN = 3
         RIGHT = 2
@@ -42,7 +43,7 @@ def main():
         SNAKESTEP = 20 # Madu sammu suurus
         TRUE = 1
         FALSE = 0
-
+        
         ######## MUUTUJAD
 
         direction = RIGHT # 1=üles,2=paremale,3=alla,4=vasakule; mis suunas vaatades madu algab
@@ -56,14 +57,11 @@ def main():
         snakedead = FALSE#kas madu on surnud
         gameregulator = 6
         gamepaused = 0 # kas mäng on pausis
-        growsnake = 0  # lisatud, et kasvatada saba iga kord kahe võrra 
+        growsnake = 0  # lisatud, et kasvatada saba  
         snakegrowunit = 2 # lisatud, et kasvatada saba iga kord kahe võrra
-        speedX, speedY = 0, 0
-        directionX, directionY = 0, 0
-        blockerposX, blockerposY = 20, 200
-        
-        blocker = pygame.Rect(blockerposX, blockerposY, 40, 20)
-        blockerSpeedX = 3
+        speedX = 2 #blockeri kiirus
+        blockerxy = [400, 300]#blocker korti
+        blocker_direction = RIGHT#blocker algus suund
         pygame.init()
         clock = pygame.time.Clock()#Mängu kell 
         screen = pygame.display.set_mode(WINSIZE)#ekraani suurus
@@ -71,8 +69,6 @@ def main():
         taust = pygame.image.load("failid/hein.png") #*Ise lisanud; laeb tausta pildi
         taust = pygame.transform.scale(taust, [800,600])#*Ise lisanud ; muudab tausta pildi suurust
         screen.blit(taust,[0,0])#*Ise lisanud ; Laeb tausta ekraanile
-        blockerImage = pygame.image.load("failid/blocker.png")
-        blockerImage = pygame.transform.scale(blockerImage, [40,20])
         kirssimg = pygame.image.load("failid/kirss.png")#*Ise lisanud; laeb kirsi pildi
         kirssimg = pygame.transform.scale(kirssimg, BLOCKSIZE)#*Ise lisanud; teeb kirsi suuruse blocky suuruseks
         startaeg = time.time()
@@ -197,12 +193,21 @@ def main():
                     if snakexy[1] > MAXY:
                         snakedead = TRUE
 
+
+                if blocker_direction == RIGHT:#liigutab blockeri paremale
+                    blockerxy[0] += speedX
+                    if blockerxy[0] >= MAXX:
+                        blocker_direction = LEFT
+                elif blocker_direction == LEFT:#kui jõuab äärde muudab suunda vasakule
+                    blockerxy[0] -= speedX
+                    if blockerxy[0] <= MINX:
+                        blocker_direction = RIGHT
                 ### kas madu läheb enda pealt üle
                                         
                 if len(snakelist) > 3 and snakelist.count(snakexy) > 0: 
                     snakedead = TRUE
                 
-
+                
                         
                 #### genereeri kirss juhuslikus positsioonis, kui ekraanil pole kirssi
                 #### veendu, et kirss ei ilmuks madu positsioonile
@@ -246,21 +251,25 @@ def main():
             # Puhasta ekraan
             screen.blit(taust,[0,0])#*Ise lisanud
             
-                            #Blcoker
-            blocker = pygame.Rect(blockerposX, blockerposY, 20, 20)
-            screen.blit(blockerImage,blocker)
-                
-                #liikumine
-            blockerposX += blockerSpeedX
+            
+           
+                            #Blocker
+            blocker = pygame.Surface(blockerSize)
+            blocker.fill(BLUE)
+            screen.blit(blocker, blockerxy)
+            
+            
+         
                 
 
-            if blockerposX > screenX-blockerImage.get_rect().width or blockerposX < 0:
-                blockerSpeedX = -blockerSpeedX
             
             #kokkupõrke 
             
-              
-        
+            for part in snakelist:
+                if blockerxy[0] <= part[0] < blockerxy[0] + blockerSize[0] and blockerxy[1] <= part[1] < blockerxy[1] + blockerSize[1]:
+                    snakedead = TRUE
+
+
             
             #Joonista ekraani piirid
             #horisontaaljooned
@@ -279,6 +288,8 @@ def main():
             # Väljasta array elemendid ekraanile ruutudena (madu)
             for element in snakelist:
                 pygame.draw.rect(screen,GREEN,Rect(element,BLOCKSIZE))#*
+               
+
 
             # Joonista kirss
             kirss = pygame.draw.rect(screen,WHITE,Rect(kirssxy,[0,0]))  #*Ise lisanud              
