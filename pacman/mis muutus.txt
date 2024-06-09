@@ -1,0 +1,6 @@
+1)alustasin kasutates PacMan-Pygame-master baasina
+2)Lisasin Mitme punkti pelleti  - Powerup = 100 punkti - reasource kaust magic_pellet.png
+rida 168 - 171
+3)Lisasin pelletid tasemesse - resource kaust levelid1 - 7 (*-tähistab powerupi)
+4)Lisasin liikumis juhendid ja punkti väärdused esimesele ekraanile.- rida 84 , 113,140
+5)Isasin boonus elud- resource kaust levelid3,6,7 (heart.png +-tähistab boonus elu)- field.py- rida 16, 63, 126- main.py - rida 44,176,553
