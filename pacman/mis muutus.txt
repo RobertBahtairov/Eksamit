@@ -2,5 +2,7 @@
 2)Lisasin Mitme punkti pelleti  - Powerup = 100 punkti - reasource kaust magic_pellet.png
 rida 168 - 171
 3)Lisasin pelletid tasemesse - resource kaust levelid1 - 7 (*-tähistab powerupi)
-4)Lisasin liikumis juhendid ja punkti väärdused esimesele ekraanile.- rida 84 , 113,140
-5)Isasin boonus elud- resource kaust levelid3,6,7 (heart.png +-tähistab boonus elu)- field.py- rida 16, 63, 126- main.py - rida 44,176,553
+4)Lisasin liikumis juhendid ja punkti väärdused esimesele ekraanile.- rida 84 , 113,140(tõrge oli see ,et text ei ilmunud level selecti ekraanil. Ais oli kasutasin "text" ,et näidata seda aga pidi tkinteri "Label"id kasutama ,et tekst ilmuks)
+5)Isasin boonus elud- resource kaust levelid3,6,7 (heart.png +-tähistab boonus elu)- field.py- rida 16, 63, 126- main.py - rida 44,176,553(Ise tulin selle peale)
+(tõrge tuli selles ,et kui elud sisestasin leveli faili ei tulnud nad mängu ja koht oli tühi.Asi oli "field" failis viga, sinna ei olnud lisatud "heart" sümbol ja selle pärast ei laadinud nad levelisse,)
+(tõrge oli südame sümbol oli liiga suur - 612 * 451 pixlid- lahendus oli Microsoft painti minna ja muuda selle pixli suurus väiksemaks 6*4)
