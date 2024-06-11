@@ -157,23 +157,23 @@ class MainEngine(object):
         for j in range(32):
             for i in range(28):
 
-                if field.gameEngine.levelObjects[i][j].name == "empty":
+                if field.gameEngine.levelObjects[i][j].name == "empty":#laeb tühja koha
                     pass
-                elif field.gameEngine.levelObjects[i][j].name == "wall":
+                elif field.gameEngine.levelObjects[i][j].name == "wall": #laeb seina kordinaati mis on teksti failis
                     self.wGameCanv.itemconfig(self.wGameCanvObjects[i][j], image=self.wSprites['wall'], state='normal')
                     self.wGameCanv.coords(self.wGameCanvObjects[i][j], 3+i*17+8, 30+j*17+8)
-                elif field.gameEngine.levelObjects[i][j].name == "cage":
+                elif field.gameEngine.levelObjects[i][j].name == "cage":#laeb värava kordinaati mis on teksti failis
                     self.wGameCanv.itemconfig(self.wGameCanvObjects[i][j], image=self.wSprites['cage'], state='normal')
                     self.wGameCanv.coords(self.wGameCanvObjects[i][j], 3+i*17+8, 30+j*17+8)
-                elif field.gameEngine.levelObjects[i][j].name == "pellet":
+                elif field.gameEngine.levelObjects[i][j].name == "pellet":#laeb pelleti kordinaati mis on teksti failis
                     if field.gameEngine.levelObjects[i][j].isDestroyed == False:
                         self.wGameCanv.itemconfig(self.wGameCanvObjects[i][j], image=self.wSprites['pellet'], state='normal')
                         self.wGameCanv.coords(self.wGameCanvObjects[i][j], 3+i*17+8, 30+j*17+8)
-                elif field.gameEngine.levelObjects[i][j].name == "powerup":
+                elif field.gameEngine.levelObjects[i][j].name == "powerup":#laeb 100pnk pelleti kordinaati mis on teksti failis
                     if field.gameEngine.levelObjects[i][j].isDestroyed == False:
                         self.wGameCanv.itemconfig(self.wGameCanvObjects[i][j], image=self.wSprites['powerup'], state='normal')
                         self.wGameCanv.coords(self.wGameCanvObjects[i][j], 3+i*17+8, 30+j*17+8)
-                elif field.gameEngine.levelObjects[i][j].name == "heart":
+                elif field.gameEngine.levelObjects[i][j].name == "heart":#laeb lisa elu kordinaati mis on teksti failis
                     if field.gameEngine.levelObjects[i][j].isDestroyed == False:
                         self.wGameCanv.itemconfig(self.wGameCanvObjects[i][j], image=self.wSprites['heart'], state='normal')
                         self.wGameCanv.coords(self.wGameCanvObjects[i][j], 3+i*17+8, 30+j*17+8)           
@@ -197,7 +197,7 @@ class MainEngine(object):
 
         # advance to next phase: get ready!
         pygame.mixer.music.stop()
-        pygame.mixer.music.load("resource/sound_intro.mp3")
+        pygame.mixer.music.load("resource/sound_intro.mp3")#laeb alustamis hääle
         pygame.mixer.music.play(loops=0, start=0.0)
         self.isLevelGenerated = True
         self.timerReady = PerpetualTimer(0.55, self.__initLevelStarting)
@@ -205,20 +205,20 @@ class MainEngine(object):
 
 
     def inputResponseLeft(self, event):
-        field.gameEngine.movingObjectPacman.dirNext = "Left"
+        field.gameEngine.movingObjectPacman.dirNext = "Left"#loeb vasakule liikumist
 
     def inputResponseRight(self, event):
-        field.gameEngine.movingObjectPacman.dirNext = "Right"
+        field.gameEngine.movingObjectPacman.dirNext = "Right"#loeb paremale liikumist
 
     def inputResponseUp(self, event):
-        field.gameEngine.movingObjectPacman.dirNext = "Up"
+        field.gameEngine.movingObjectPacman.dirNext = "Up"#loeb üles liikumist
 
     def inputResponseDown(self, event):
-        field.gameEngine.movingObjectPacman.dirNext = "Down"
+        field.gameEngine.movingObjectPacman.dirNext = "Down"#loeb alla liikumist
 
     def inputResponseEsc(self, event):
         self.timerLoop.stop()
-        messagebox.showinfo("Game Over!", "You hit the escape key!")
+        messagebox.showinfo("Game Over!", "You hit the escape key!")#loeb ESC vajutamist
 
     def inputResponseReturn(self, event):
         # skip feature
@@ -256,7 +256,7 @@ class MainEngine(object):
 
         # ghost sound as music
         pygame.mixer.music.stop()
-        pygame.mixer.music.load("resource/sound_ghost.ogg")
+        pygame.mixer.music.load("resource/sound_ghost.ogg")#laeb kummiduse hääled
         pygame.mixer.music.play(-1)
 
         self.timerLoop = PerpetualTimer(0.045, self.loopFunction)
@@ -490,7 +490,7 @@ class MainEngine(object):
         if coordAbsP[0] % 4 == 0 and coordAbsP[1] % 4 == 0:
             encounterFix = field.gameEngine.encounterFixed(coordRelP[0], coordRelP[1]) # call encounterEvent function
 
-            if encounterFix == "empty":
+            if encounterFix == "empty":#kui oled tühjal kohal läheb edasi
                 pass
             elif encounterFix == "pellet":
                 if field.gameEngine.levelObjects[coordRelP[0]][coordRelP[1]].isDestroyed == False:  # check the pellet is alive
