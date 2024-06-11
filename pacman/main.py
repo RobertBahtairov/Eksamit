@@ -684,9 +684,9 @@ class MainEngine(object):
 
 
 
-    def encounterEventDeadGameOver(self):
+    def encounterEventDeadGameOver(self):#Kasutab seda kui sured ära
         self.statusDeadTimer += 1
-        self.wGameCanv.itemconfig(self.wGameCanvLabelGameOver, image=self.wSprites['gameover'])
+        self.wGameCanv.itemconfig(self.wGameCanvLabelGameOver, image=self.wSprites['gameover'])#näitab gameover pilti 
 
         if self.statusDeadTimer < 8:
             # blinking function
