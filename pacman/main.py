@@ -3,6 +3,9 @@ from threading import Timer
 from data import field
 import os, pygame
 
+GREEN = (0, 255, 0)
+RED = (255, 0, 0)
+YELLOW = (255, 255, 0)
 
 class MainEngine(object):
 
@@ -35,13 +38,13 @@ class MainEngine(object):
         ## read the sprite files
         # all sprites will saved in this dictionary
         self.wSprites = {
-            'getready': PhotoImage(file="resource/sprite_get_ready.png"),
-            'gameover': PhotoImage(file="resource/sprite_game_over.png"),
-            'wall': PhotoImage(file="resource/sprite_wall.png"),
-            'cage': PhotoImage(file="resource/sprite_cage.png"),
-            'pellet': PhotoImage(file="resource/sprite_pellet.png"),
-            'powerup':PhotoImage(file="resource/magic_pellet.png"),
-            'heart':PhotoImage(file="resource/heart.png")
+            'getready': PhotoImage(file="resource/sprite_get_ready.png"),#laeb sprite_get_ready pildi
+            'gameover': PhotoImage(file="resource/sprite_game_over.png"),#laeb sprite_game_over pildi
+            'wall': PhotoImage(file="resource/sprite_wall.png"),#laeb sprite_wall pildi
+            'cage': PhotoImage(file="resource/sprite_cage.png"),#laeb sprite_cage pildi
+            'pellet': PhotoImage(file="resource/sprite_pellet.png"),#laeb sprite_pellet pildi
+            'powerup':PhotoImage(file="resource/magic_pellet.png"),#laeb magic_pellet pildi
+            'heart':PhotoImage(file="resource/heart.png")#laeb heart pildi
             
         }
 
@@ -485,6 +488,7 @@ class MainEngine(object):
 
         else:
             pass
+        
 
         # check the object reaches grid coordinate
         if coordAbsP[0] % 4 == 0 and coordAbsP[1] % 4 == 0:
@@ -504,8 +508,12 @@ class MainEngine(object):
                         self.wSounds['chomp2'].play(loops=0)
 
                     self.statusScore += 10 # adjust the score
-                    self.wGameLabelScore.configure(text=("Score: " + str(self.statusScore))) # showing on the board
+                    self.wGameLabelScore.configure(text=("Skoor: " + str(self.statusScore))) # showing on the board
                     field.gameEngine.levelPelletRemaining -= 1 # adjust the remaining pellet numbers
+                    
+                    if self.statusScore >= 200:
+                        self.wGameCanv.config(background="green")
+        
 
                     if field.gameEngine.levelPelletRemaining == 0:
                         self.encounterEventLevelClear() # level clear
@@ -523,13 +531,15 @@ class MainEngine(object):
                         self.wSounds['chomp2'].play(loops=0)
 
                     self.statusScore += 100 # adjust the score
-                    self.wGameLabelScore.configure(text=("Score: " + str(self.statusScore))) # showing on the board
+                    self.wGameLabelScore.configure(text=("Skoor: " + str(self.statusScore))) # showing on the board
                     field.gameEngine.levelPelletRemaining -= 1 # adjust the remaining pellet numbers
 
                     if field.gameEngine.levelPelletRemaining == 0:
                         self.encounterEventLevelClear() # level clear
                     else:
                         pass
+                    
+            
             elif encounterFix == "heart":
                 if field.gameEngine.levelObjects[coordRelP[0]][coordRelP[1]].isDestroyed == False:  # check the pellet is alive
                     field.gameEngine.levelObjects[coordRelP[0]][coordRelP[1]].isDestroyed = True # destroy the pellet
@@ -542,14 +552,17 @@ class MainEngine(object):
                         self.wSounds['chomp2'].play(loops=0)
 
                     self.statusScore += 10 # adjust the score
-                    self.wGameLabelScore.configure(text=("Score: " + str(self.statusScore))) # showing on the board
+                    self.wGameLabelScore.configure(text=("Skoor: " + str(self.statusScore))) # showing on the board
                     self.statusLife += 1
                     self.wGameLabelLife.configure(text=("Elu: " + str(self.statusLife)))
                     field.gameEngine.levelPelletRemaining -= 1 # adjust the remaining pellet numbers
 
                     if field.gameEngine.levelPelletRemaining == 0:
                         self.encounterEventLevelClear() # level clear
+                    
 
+                  
+                    
                 else:   # the pellet is already taken
                     pass
 
@@ -620,7 +633,9 @@ class MainEngine(object):
     def encounterEventDead(self):
 
         self.statusLife -= 1    # subtract remaining life
-
+        self.statusScore -= 200
+        
+        
         if self.statusLife >= 0:
             self.wGameLabelLife.configure(text=("Elu: " + str(self.statusLife))) # showing on the board
         else:   # prevent showing minus life (will be game over anyway)
@@ -725,6 +740,8 @@ class PerpetualTimer(object):
     def stop(self):
             self.thread.cancel()
             self.isRunning = False
+            
+
 
 
 # initialize pygame for sound effects
